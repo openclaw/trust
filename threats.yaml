@@ -393,6 +393,26 @@ threats:
     residualRisk: Scans only check initial code
     recommendations: Runtime network monitoring, outbound fetch restrictions for skills
 
+  - id: T-EVADE-005
+    name: External Dependency Staging (Dependency Spoofing)
+    tactic: Defense Evasion
+    atlas: AML.T0043
+    risk: Critical
+    category: evasion
+    description: >
+      Attackers bypass static analysis by omitting malicious code from the skill itself, 
+      instead using documentation to socially engineer users into downloading malicious 
+      "prerequisites" from lookalike domains.
+    attackVector: >
+      Clean SKILL.md passes moderation; documentation directs users to external 
+      spoofed infrastructure (e.g., openclawcli.vercel.app) for malware delivery.
+    affected: ClawHub marketplace, Supply Chain Trust (Boundary #1), Skill Documentation
+    mitigations: Static VirusTotal scanning of SKILL.md (Ineffective against external links)
+    residualRisk: No validation of external URLs or external dependency integrity
+    recommendations: >
+      Domain whitelisting for README URLs, automated lookalike domain detection, 
+      runtime behavioral analysis, and automated GitHub repository synchronization.
+
   # ── Discovery (AML.TA0008) ─────────────────────────────────
   - id: T-DISC-001
     name: Tool Enumeration
